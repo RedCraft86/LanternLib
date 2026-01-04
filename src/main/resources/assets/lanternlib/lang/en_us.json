@@ -1,0 +1,9 @@
+{
+  "lanternlib.configuration.hideCreativeTabTips": "Hide Creative Tab Tooltips",
+
+  "lanternlib.configuration.titleBar": "Title Bar",
+  "lanternlib.configuration.memoryTitle": "Memory Usage",
+  "lanternlib.configuration.customTitle": "Custom Text",
+
+  "lanternlib.configuration.griefingBlacklist": "Griefing Blacklist"
+}

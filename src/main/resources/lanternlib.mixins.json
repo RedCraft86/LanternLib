@@ -1,12 +1,19 @@
 {
   "required": true,
-  "compatibilityLevel": "JAVA_17",
   "package": "com.redcraft86.lanternlib.mixin",
-  "plugin": "com.redcraft86.lanternlib.mixin.MixinPlugin",
-  "refmap": "lanternlib.refmap.json",
+  "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "RemoveSpeedLimits",
+    "accessor.ItemAccessor"
   ],
   "client": [
+    "CreativeInventoryScreenMixin",
+    "MinecraftMixin"
   ],
-  "minVersion": "0.8"
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  }
 }
