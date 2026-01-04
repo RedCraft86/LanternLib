@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 
 import com.redcraft86.lanternlib.configs.*;
+import com.redcraft86.lanternlib.common.CommonPatches;
+
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -17,6 +19,8 @@ public class LanternLib {
     public LanternLib(FMLJavaModLoadingContext context)
     {
         IEventBus modEventBus = context.getModEventBus();
+
+        CommonPatches.apply();
 
         context.registerConfig(ModConfig.Type.CLIENT, ClientCfg.SPEC);
         context.registerConfig(ModConfig.Type.COMMON, CommonCfg.SPEC);
