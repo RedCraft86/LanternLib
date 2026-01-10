@@ -9,5 +9,5 @@ Mod developers are free to depend on this mod without being required to open-sou
 ### **Forks & Modifications**
 You may fork and modify this project. However, if you distribute a modified version, you **must** also provide access to the source code of your changes as per the LGPL3 license.
 
-#### **If building from source**
-You may notice that some files and Gradle configs are missing. This is due to the fact that this mod is being created in my [multi-mod workspace](https://github.com/RedCraft86/MCModTemplates) setup where the root gradle files handle most of the common stuff. 
+### **If building from source**
+You may notice that some files and Gradle configs are missing. This is due to the fact that this mod is being created in my [multi-mod workspace](https://github.com/RedCraft86/MCModTemplates) setup where the root Gradle files handle most of the common stuff. 
