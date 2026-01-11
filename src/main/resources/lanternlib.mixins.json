@@ -1,7 +1,6 @@
 {
   "required": true,
   "package": "com.redcraft86.lanternlib.mixin",
-  "plugin": "com.redcraft86.lanternlib.mixin.MixinPlugin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
 
