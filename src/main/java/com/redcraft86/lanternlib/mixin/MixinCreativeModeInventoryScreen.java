@@ -3,7 +3,10 @@ package com.redcraft86.lanternlib.mixin;
 import java.util.List;
 import java.util.Collections;
 
+import com.redcraft86.lanternlib.configs.ClientCfg;
+
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +22,9 @@ public class MixinCreativeModeInventoryScreen {
             )
     )
     private List<CreativeModeTab> redirectTabs() {
-        return Collections.emptyList(); // TODO: config
+        if (ClientCfg.DISABLE_TAB_TOOLTIPS.get()) {
+            return Collections.emptyList();
+        }
+        return CreativeModeTabs.tabs();
     }
 }

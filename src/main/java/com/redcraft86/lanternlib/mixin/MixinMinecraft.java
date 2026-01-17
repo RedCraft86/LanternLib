@@ -1,5 +1,7 @@
 package com.redcraft86.lanternlib.mixin;
 
+import com.redcraft86.lanternlib.configs.ClientCfg;
+
 import net.minecraft.client.Minecraft;
 
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,7 +15,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MixinMinecraft {
     @Unique private static final int TICK_INTERVAL = 5;
     @Unique private static int TICK_COUNTER = 0;
-    @Unique private static String TITLE = null;
 
     @Unique private static String buildMemoryString() {
         final int CONVERSION = 1024 * 1024;
@@ -27,11 +28,15 @@ public class MixinMinecraft {
 
     @Inject(method = "createTitle", at = @At("RETURN"), cancellable = true)
     private void onCreateTitle(CallbackInfoReturnable<String> cir) {
-        if (TITLE == null) {
-            TITLE = cir.getReturnValue(); // TODO: custom title config
-        } else {
-            // TODO: Optional memory string
-            cir.setReturnValue(String.format("%s | %s", TITLE, buildMemoryString()));
+        if (!ClientCfg.isLoaded()) {
+            return;
+        }
+
+        final String customTitle = ClientCfg.CUSTOM_TITLE_BAR.get();
+        final boolean showMemory = ClientCfg.MEMORY_TITLE_BAR.get();
+        if (!customTitle.isBlank() || showMemory) {
+            String baseTitle = customTitle.isBlank() ? cir.getReturnValue() : customTitle;
+            cir.setReturnValue(showMemory ? String.format("%s | %s", baseTitle, buildMemoryString()) : baseTitle);
         }
     }
 
