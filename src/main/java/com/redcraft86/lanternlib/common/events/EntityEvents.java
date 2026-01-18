@@ -12,7 +12,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.EntityMobGriefingEvent;
 
 @EventBusSubscriber(modid = LanternLib.MOD_ID)
-public class ServerEvents {
+public class EntityEvents {
 
     @SubscribeEvent
     static void onMobGriefing(EntityMobGriefingEvent event) {
