@@ -1,15 +1,15 @@
 package com.redcraft86.lanternlib.util;
 
 import java.util.Map;
-import java.util.HashMap;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import javax.annotation.Nullable;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 
 public class TooltipBuilder {
-    private final Map<String, Component> tooltips = new HashMap<>();
+    private final Map<String, Component> tooltips = new LinkedHashMap<>();
 
     public TooltipBuilder() {}
 
