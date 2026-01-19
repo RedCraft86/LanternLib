@@ -11,9 +11,10 @@ public class CommonCfg {
     public static final ModConfigSpec.ConfigValue<List<? extends String>> GRIEFING_BLACKLIST;
 
     static {
-        GRIEFING_BLACKLIST = BUILDER.defineListAllowEmpty("griefingBlacklist",
-                List.of("minecraft:enderman", "minecraft:fireball"), () -> "minecraft:",
-                ValidationUtils::isResourceLoc);
+        GRIEFING_BLACKLIST = BUILDER.comment("List of entities that cannot grief the world.")
+                .defineListAllowEmpty("griefingBlacklist", List.of("minecraft:enderman", "minecraft:fireball"),
+                        () -> "minecraft:", ValidationUtils::isResourceLoc
+                );
     }
 
     public static final ModConfigSpec SPEC = BUILDER.build();
