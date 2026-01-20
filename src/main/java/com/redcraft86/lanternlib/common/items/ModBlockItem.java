@@ -1,7 +1,6 @@
 package com.redcraft86.lanternlib.common.items;
 
-import com.redcraft86.lanternlib.util.TooltipBuilder;
-import com.redcraft86.lanternlib.common.blocks.ModBlock;
+import com.redcraft86.lanternlib.common.util.ITooltipProvider;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
@@ -16,13 +15,11 @@ public class ModBlockItem extends BlockItem {
         super(block, properties);
     }
 
-    public TooltipBuilder getTooltips() {
-        return (getBlock() instanceof ModBlock modBlock) ? modBlock.getTooltips() : null;
-    }
-
     @Override
     public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> components, TooltipFlag tooltipFlag) {
         super.appendHoverText(stack, context, components, tooltipFlag);
-        components.addAll(getTooltips().build());
+        if (getBlock() instanceof ITooltipProvider provider) {
+            components.addAll(provider.getTooltips());
+        }
     }
 }

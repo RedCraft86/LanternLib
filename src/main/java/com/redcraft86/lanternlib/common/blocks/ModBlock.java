@@ -1,17 +1,11 @@
 package com.redcraft86.lanternlib.common.blocks;
 
-import com.redcraft86.lanternlib.util.TooltipBuilder;
+import com.redcraft86.lanternlib.common.util.ITooltipProvider;
 
 import net.minecraft.world.level.block.Block;
 
-public class ModBlock extends Block {
-    private final TooltipBuilder tooltips = new TooltipBuilder();
-
+public class ModBlock extends Block implements ITooltipProvider {
     public ModBlock(Properties properties) {
         super(properties);
-    }
-
-    public TooltipBuilder getTooltips() {
-        return tooltips;
     }
 }
