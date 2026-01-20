@@ -10,7 +10,7 @@ public class ValidationUtils {
         if (obj instanceof String str) {
             // n:p
             // 123 (3 chars minimum)
-            if (str.length() < 3) {
+            if (str.length() < 3 || str.contains(" ")) {
                 return false;
             }
 
@@ -30,7 +30,7 @@ public class ValidationUtils {
         if (obj instanceof String str) {
             // #n:p
             // 1234 (4 chars minimum)
-            return str.length() >= 4 && str.startsWith("#")
+            return str.length() >= 4 && !str.contains(" ") && str.startsWith("#")
                     && isResourceLoc(str.substring(1));
         }
         return false;
@@ -41,6 +41,9 @@ public class ValidationUtils {
             return true;
         }
         if (obj instanceof String str) {
+            if (str.contains(" ")) {
+                return false;
+            }
             if (str.startsWith("#")) {
                 str = str.substring(1);
             }
