@@ -1,9 +1,12 @@
-package com.redcraft86.lanternlib.configs;
+package com.redcraft86.lanternlib.utils;
 
 import net.minecraft.resources.ResourceLocation;
 
 public class ValidationUtils {
     public static boolean isResourceLoc(final Object obj) {
+        if (obj instanceof ResourceLocation) {
+            return true;
+        }
         if (obj instanceof String str) {
             // n:p
             // 123 (3 chars minimum)
@@ -20,6 +23,10 @@ public class ValidationUtils {
     }
 
     public static boolean isResourceTag(final Object obj) {
+        if (obj instanceof ResourceLocation) {
+            // There isn't an easy way to check for a tag if it's already a ResourceLocation so we'll assume it is
+            return true;
+        }
         if (obj instanceof String str) {
             // #n:p
             // 1234 (4 chars minimum)
@@ -30,6 +37,9 @@ public class ValidationUtils {
     }
 
     public static boolean isResourceLocOrTag(final Object obj) {
+        if (obj instanceof ResourceLocation) {
+            return true;
+        }
         if (obj instanceof String str) {
             if (str.startsWith("#")) {
                 str = str.substring(1);
