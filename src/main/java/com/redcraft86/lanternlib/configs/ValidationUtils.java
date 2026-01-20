@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.util;
+package com.redcraft86.lanternlib.configs;
 
 import net.minecraft.resources.ResourceLocation;
 
