@@ -17,6 +17,7 @@ import net.neoforged.bus.api.IEventBus;
 public class LanternLib {
     public static final String MOD_ID = "lanternlib";
     public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Log4jFilter LOG_FILTER = Log4jFilter.getInstance();
 
     public LanternLib(IEventBus modEventBus, ModContainer modContainer) {
         NeoForge.EVENT_BUS.register(this);
