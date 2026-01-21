@@ -31,9 +31,7 @@ public abstract class BaseJsonCfg {
 
     public void loadJson() {
         if (!Files.exists(path)) {
-            json = new JsonObject();
-            loadDefault();
-            saveJson();
+            resetJson();
             return;
         }
 
@@ -72,6 +70,7 @@ public abstract class BaseJsonCfg {
     abstract protected void toJson(JsonObject data);
     protected void resetJson() {
         json = new JsonObject();
+        loadDefault();
         saveJson();
     }
 
