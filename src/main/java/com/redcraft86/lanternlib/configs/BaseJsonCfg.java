@@ -16,7 +16,6 @@ public abstract class BaseJsonCfg {
 
     private final Path path;
     private JsonElement json = null;
-    private boolean firstLoad = true;
 
     public BaseJsonCfg(String name) {
         if (name == null || name.isBlank()) {
@@ -24,7 +23,7 @@ public abstract class BaseJsonCfg {
         }
 
         path = FMLPaths.CONFIGDIR.get().resolve(
-            name.endsWith(".json") ? name : name + ".json"
+            name.contains(".") ? name : name + ".json"
         );
 
         loadJson();
@@ -33,6 +32,7 @@ public abstract class BaseJsonCfg {
     public void loadJson() {
         if (!Files.exists(path)) {
             json = new JsonObject();
+            loadDefault();
             saveJson();
             return;
         }
@@ -40,19 +40,26 @@ public abstract class BaseJsonCfg {
         try {
             String data = Files.readString(path);
             json = JsonParser.parseString(data);
-            if (firstLoad) {
-                firstLoad = false;
-                validateJson();
+            if (json.isJsonObject()) {
+                fromJson(json.getAsJsonObject());
+            } else {
+                resetJson();
             }
         } catch (JsonSyntaxException e) {
             LOGGER.error("Json config {} was malformed! Attempting to fix...", path.getFileName());
-            validateJson();
+            resetJson();
         } catch (IOException e) {
             throw new RuntimeException("Failed to load config at: " + path.getFileName(), e);
         }
     }
 
     public void saveJson() {
+        if (json.isJsonObject()) {
+            toJson(json.getAsJsonObject());
+        } else {
+            json = new JsonObject();
+        }
+
         try {
             Files.writeString(path, GSON.toJson(json));
         } catch (IOException e) {
@@ -60,7 +67,11 @@ public abstract class BaseJsonCfg {
         }
     }
 
-    public void validateJson() {
+    abstract protected void loadDefault();
+    abstract protected void fromJson(JsonObject data);
+    abstract protected void toJson(JsonObject data);
+    protected void resetJson() {
+        json = new JsonObject();
         saveJson();
     }
 
