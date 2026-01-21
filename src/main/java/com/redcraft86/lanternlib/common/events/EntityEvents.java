@@ -3,6 +3,7 @@ package com.redcraft86.lanternlib.common.events;
 import com.redcraft86.lanternlib.LanternLib;
 import com.redcraft86.lanternlib.configs.CommonCfg;
 
+import net.minecraft.world.level.Level;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -17,7 +18,8 @@ public class EntityEvents {
     @SubscribeEvent
     static void onMobGriefing(EntityMobGriefingEvent event) {
         Entity entity = event.getEntity();
-        if (entity.level().isClientSide()) {
+        Level level = entity.level();
+        if (level.isClientSide()) {
             return;
         }
 
