@@ -2,7 +2,7 @@ package com.redcraft86.lanternlib.configs;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public class ClientCfg {
+public final class ClientCfg {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.BooleanValue MEMORY_TITLE_BAR;

@@ -23,7 +23,7 @@ import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
  * <a href="https://github.com/CAS-ual-TY/DuplicateEntityUUIDFix/blob/main/src/main/java/de/cas_ual_ty/deuf/DEUF.java">Src</a>
  */
 @EventBusSubscriber(modid = LanternLib.MOD_ID)
-public class DuplicateUUID {
+public final class DuplicateUUID {
     public static final Logger LOGGER = LogUtils.getLogger();
     private static final Set<UUID> OCCUPIED = new HashSet<>();
     private static final int MAX_ITERATIONS = 100;

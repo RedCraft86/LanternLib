@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class TransientFlags {
+public final class TransientFlags {
     private static final Set<String> FLAGS = ConcurrentHashMap.newKeySet();
 
     public static void addFlag(String flag) {

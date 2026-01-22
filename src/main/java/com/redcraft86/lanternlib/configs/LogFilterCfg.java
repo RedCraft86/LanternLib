@@ -5,7 +5,7 @@ import java.util.List;
 import com.redcraft86.lanternlib.LanternLib;
 import com.redcraft86.lanternlib.utils.JsonConfig;
 
-public class LogFilterCfg extends JsonConfig {
+public final class LogFilterCfg extends JsonConfig {
     public static LogFilterCfg INSTANCE = null;
 
     public static boolean PRINT_SHADOW = false;

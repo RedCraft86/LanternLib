@@ -14,7 +14,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.bus.api.IEventBus;
 
 @Mod(LanternLib.MOD_ID)
-public class LanternLib {
+public final class LanternLib {
     public static final String MOD_ID = "lanternlib";
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final Log4jFilter LOG_FILTER = Log4jFilter.getInstance();

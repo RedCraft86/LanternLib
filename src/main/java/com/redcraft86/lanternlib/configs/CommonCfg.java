@@ -5,7 +5,7 @@ import java.util.List;
 import com.redcraft86.lanternlib.utils.ValidationUtils;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-public class CommonCfg {
+public final class CommonCfg {
     private static final ModConfigSpec.Builder BUILDER = new ModConfigSpec.Builder();
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> GRIEFING_BLACKLIST;

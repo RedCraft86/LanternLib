@@ -19,7 +19,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
  * <a href="https://github.com/Vonr/NaNny">NaNny Page</a>
  */
 @EventBusSubscriber(modid = LanternLib.MOD_ID)
-public class NaNHealth {
+public final class NaNHealth {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     @SubscribeEvent

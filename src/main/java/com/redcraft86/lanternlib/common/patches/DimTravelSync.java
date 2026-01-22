@@ -21,7 +21,7 @@ import net.neoforged.neoforge.event.entity.player.PlayerEvent;
  * <a href="https://github.com/MCTeamPotato/DimensionalSyncFixes/blob/1.20.1/src/main/java/com/teampotato/dimensionalsycnfixes/DimensionalSycnFixes.java">Src</a>
  */
 @EventBusSubscriber(modid = LanternLib.MOD_ID)
-public class DimTravelSync {
+public final class DimTravelSync {
     @SubscribeEvent
     static void onEntityJoin(PlayerEvent.PlayerChangedDimensionEvent event) {
         Player player = event.getEntity();

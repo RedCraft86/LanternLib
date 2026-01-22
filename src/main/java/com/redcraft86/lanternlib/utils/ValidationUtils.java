@@ -2,7 +2,7 @@ package com.redcraft86.lanternlib.utils;
 
 import net.minecraft.resources.ResourceLocation;
 
-public class ValidationUtils {
+public final class ValidationUtils {
     public static boolean isResourceLoc(final Object obj) {
         if (obj instanceof ResourceLocation) {
             return true;
