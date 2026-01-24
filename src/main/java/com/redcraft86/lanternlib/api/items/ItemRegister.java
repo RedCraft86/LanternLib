@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.common.items;
+package com.redcraft86.lanternlib.api.items;
 
 import java.util.List;
 import java.util.Map;

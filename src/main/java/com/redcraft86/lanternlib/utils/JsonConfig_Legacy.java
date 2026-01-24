@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.neoforged.fml.loading.FMLPaths;
 
-public abstract class JsonConfig {
+public abstract class JsonConfig_Legacy {
     protected static final Logger LOGGER = LogUtils.getLogger();
     protected static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
@@ -19,12 +19,13 @@ public abstract class JsonConfig {
     private JsonObject json = null;
     private boolean isDirty = false;
 
-    protected JsonConfig(String filename) {
+    protected JsonConfig_Legacy(String filename) {
         if (filename == null || filename.isBlank()) {
             throw new IllegalArgumentException("Config name must not be null or blank");
         }
 
-        filePath = FMLPaths.CONFIGDIR.get().resolve(filename.contains(".") ? filename : filename + ".json");
+        String finalName = filename.contains(".") ? filename.split("\\.")[0] : filename;
+        filePath = FMLPaths.CONFIGDIR.get().resolve(finalName + "-legacy.json");
 
         readJson();
     }

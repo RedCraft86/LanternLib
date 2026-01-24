@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.common.util;
+package com.redcraft86.lanternlib.utils;
 
 import java.util.List;
 

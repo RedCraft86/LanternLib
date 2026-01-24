@@ -1,6 +1,6 @@
-package com.redcraft86.lanternlib.common.items;
+package com.redcraft86.lanternlib.api.items;
 
-import com.redcraft86.lanternlib.common.util.ITooltipProvider;
+import com.redcraft86.lanternlib.utils.ITooltipProvider;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;

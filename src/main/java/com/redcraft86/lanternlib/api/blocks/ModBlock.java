@@ -1,6 +1,6 @@
-package com.redcraft86.lanternlib.common.blocks;
+package com.redcraft86.lanternlib.api.blocks;
 
-import com.redcraft86.lanternlib.common.util.ITooltipProvider;
+import com.redcraft86.lanternlib.utils.ITooltipProvider;
 
 import net.minecraft.world.level.block.Block;
 

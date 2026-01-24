@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.common.blocks;
+package com.redcraft86.lanternlib.api.blocks;
 
 import java.util.List;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.function.Supplier;
 
-import com.redcraft86.lanternlib.common.items.ItemRegister;
+import com.redcraft86.lanternlib.api.items.ItemRegister;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
