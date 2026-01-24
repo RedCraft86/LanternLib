@@ -17,7 +17,7 @@ public abstract class JsonConfig {
 
     private final Path filePath;
     private JsonObject json = null;
-    private boolean hasMissing = false;
+    private boolean isDirty = false;
 
     protected JsonConfig(String filename) {
         if (filename == null || filename.isBlank()) {
@@ -68,7 +68,7 @@ public abstract class JsonConfig {
             return value.getAsString();
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -78,7 +78,7 @@ public abstract class JsonConfig {
             return value.getAsBoolean();
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -88,7 +88,7 @@ public abstract class JsonConfig {
             return value.getAsFloat();
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -98,7 +98,7 @@ public abstract class JsonConfig {
             return value.getAsInt();
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -119,7 +119,7 @@ public abstract class JsonConfig {
             return result;
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -135,7 +135,7 @@ public abstract class JsonConfig {
             return result;
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -151,7 +151,7 @@ public abstract class JsonConfig {
             return result;
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -167,7 +167,7 @@ public abstract class JsonConfig {
             return result;
         }
 
-        hasMissing = true;
+        isDirty = true;
         return defaultValue;
     }
 
@@ -175,6 +175,7 @@ public abstract class JsonConfig {
         String[] segments = path.split("\\.");
         JsonObject current = getOrCreateRoot();
 
+        isDirty = true;
         for (int i = 0; i < segments.length; i++) {
             String segment = segments[i];
             if (i == segments.length - 1) {
@@ -236,7 +237,7 @@ public abstract class JsonConfig {
     abstract protected void loadData();
 
     protected void writeJson() {
-        hasMissing = false;
+        isDirty = false;
         getOrCreateRoot();
         saveData();
 
@@ -264,7 +265,7 @@ public abstract class JsonConfig {
             }
 
             loadData();
-            if (hasMissing) {
+            if (isDirty) {
                 writeJson();
             }
         } catch (JsonSyntaxException e) {
