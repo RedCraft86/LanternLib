@@ -183,6 +183,11 @@ public abstract class JsonConfig {
         StringBuilder builder = new StringBuilder();
         String[] lines = jsonStr.split("\n");
         for (String line : lines) {
+            // Two quotes and a colon symbol is already 3, so if less, it's likely a brace line
+            if (line.trim().length() < 3) {
+                builder.append(line).append("\n");
+                continue;
+            }
             for (Map.Entry<String, String> entry : comments.entrySet()) {
                 int pos = line.trim().indexOf(entry.getKey());
                 // Only correct if pos is 1 since opening quote is the 0th and the name/key is the 1st
