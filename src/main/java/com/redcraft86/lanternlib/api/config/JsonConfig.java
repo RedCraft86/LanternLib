@@ -123,6 +123,7 @@ public abstract class JsonConfig {
         }
     }
 
+    protected void postDeserialize(JsonObject root) {}
     protected void deserialize(String jsonStr) {
         try {
             JsonElement parsed = JsonParser.parseString(jsonStr);
@@ -146,12 +147,15 @@ public abstract class JsonConfig {
                     markDirty();
                 }
             }
+
+            postDeserialize(root);
         } catch (JsonSyntaxException e) {
             LOGGER.error("Failed to parse config {} due to malformed data, resetting...", this, e);
             resetFile();
         }
     }
 
+    protected void preSerialize(JsonObject root, Map<String, String> comments) {}
     protected String serialize() {
         final JsonObject root = new JsonObject();
         final Map<String, String> comments = new LinkedHashMap<>();
@@ -170,6 +174,8 @@ public abstract class JsonConfig {
 
             getJsonAtPath(root, cfg.value()).add(field.getName(), fieldToJson(field));
         }
+
+        preSerialize(root, comments);
 
         String jsonStr = GSON.toJson(root);
         StringBuilder builder = new StringBuilder();
