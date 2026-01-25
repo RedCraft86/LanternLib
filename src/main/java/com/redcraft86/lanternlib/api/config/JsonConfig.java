@@ -66,7 +66,9 @@ public abstract class JsonConfig {
     public void resetFile() {
         try {
             String original = Files.readString(filePath);
-            Files.writeString(backupPath, original);
+            if (!original.isBlank()) {
+                Files.writeString(backupPath, original);
+            }
         } catch (IOException e) {
             LOGGER.error("Failed to backup config {} before resetting. Old file will be lost.", this, e);
         }
