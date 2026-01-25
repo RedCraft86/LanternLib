@@ -198,6 +198,7 @@ public abstract class JsonConfig {
                 // Find how many tabs/spaces are behind the property so we can indent the comments appropriately
                 String tabs = line.substring(0, line.indexOf("\""));
                 builder.append(entry.getValue().replace(TAB_KEY, tabs)).append("\n");
+                break;
             }
             builder.append(line).append("\n");
         }
