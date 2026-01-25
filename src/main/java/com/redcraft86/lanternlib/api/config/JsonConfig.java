@@ -19,6 +19,7 @@ public abstract class JsonConfig {
     private static final String TAB_KEY = "{TABS}";
 
     private final Path filePath;
+    private final Path backupPath;
     private boolean fileExist = false;
     private boolean isDirty = false;
 
@@ -47,6 +48,7 @@ public abstract class JsonConfig {
         }
 
         filePath = FMLPaths.CONFIGDIR.get().resolve(filename + ".json5");
+        backupPath = Path.of(filePath + ".bak");
     }
 
     public JsonConfig() {
@@ -59,6 +61,17 @@ public abstract class JsonConfig {
 
     public final Path getPath() {
         return filePath;
+    }
+
+    public void resetFile() {
+        try {
+            String original = Files.readString(filePath);
+            Files.writeString(backupPath, original);
+        } catch (IOException e) {
+            LOGGER.error("Failed to backup config {} before resetting. Old file will be lost.", this, e);
+        }
+
+        writeFile();
     }
 
     public void readFile() {
@@ -115,7 +128,7 @@ public abstract class JsonConfig {
             JsonElement parsed = JsonParser.parseString(jsonStr);
             if (!parsed.isJsonObject()) {
                 LOGGER.error("Failed to parse config {} due to invalid format, resetting...", this);
-                writeFile();
+                resetFile();
                 return;
             }
 
@@ -135,7 +148,7 @@ public abstract class JsonConfig {
             }
         } catch (JsonSyntaxException e) {
             LOGGER.error("Failed to parse config {} due to malformed data, resetting...", this, e);
-            writeFile();
+            resetFile();
         }
     }
 
