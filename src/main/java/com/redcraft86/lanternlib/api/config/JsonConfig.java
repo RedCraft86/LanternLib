@@ -169,7 +169,7 @@ public abstract class JsonConfig {
             String comment = getFieldComment(field);
             if (comment != null && !comment.isBlank())
             {
-                comments.put("\"" + field.getName() + "\":", comment);
+                comments.put(field.getName(), comment);
             }
 
             getJsonAtPath(root, cfg.value()).add(field.getName(), fieldToJson(field));
@@ -182,9 +182,12 @@ public abstract class JsonConfig {
         String[] lines = jsonStr.split("\n");
         for (String line : lines) {
             for (Map.Entry<String, String> entry : comments.entrySet()) {
-                if (!line.trim().startsWith(entry.getKey())) {
+                int pos = line.trim().indexOf(entry.getKey());
+                // Only correct if pos is 1 since opening quote is the 0th and the name/key is the 1st
+                if (pos != 1) {
                     continue;
                 }
+
                 // Find how many tabs/spaces are behind the property so we can indent the comments appropriately
                 String tabs = line.substring(0, line.indexOf("\""));
                 builder.append(entry.getValue().replace(TAB_KEY, tabs)).append("\n");
