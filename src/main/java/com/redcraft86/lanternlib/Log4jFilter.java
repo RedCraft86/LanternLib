@@ -23,6 +23,20 @@ public final class Log4jFilter extends AbstractFilter implements Filter {
     private static Log4jFilter INSTANCE = null;
     private static String LAST_SHADOW = "";
 
+    public static Log4jFilter getInstance() {
+        if (INSTANCE != null) {
+            return INSTANCE;
+        }
+
+        if (LogFilterCfg.get().printShadow
+                || !LogFilterCfg.get().phrases.isEmpty()
+                || !LogFilterCfg.get().regexes.isEmpty()) {
+
+            INSTANCE = new Log4jFilter();
+        }
+        return INSTANCE;
+    }
+
     private Log4jFilter() {
         java.util.logging.Logger.getLogger("").setFilter(this);
         ((Logger)LogManager.getRootLogger()).addFilter(this);
@@ -37,11 +51,11 @@ public final class Log4jFilter extends AbstractFilter implements Filter {
             }
         }
 
-        if (LogFilterCfg.FILTER_CONSOLE) {
+        if (LogFilterCfg.get().filterConsole) {
             System.setOut(new SystemPrintFilter(System.out));
         }
 
-        for (String regex : LogFilterCfg.REGEX) {
+        for (String regex : LogFilterCfg.get().regexes) {
             PATTERNS.add(Pattern.compile(regex));
         }
     }
@@ -57,29 +71,17 @@ public final class Log4jFilter extends AbstractFilter implements Filter {
         return canShowLog(msg) ? Result.NEUTRAL : Result.DENY;
     }
 
-    public static Log4jFilter getInstance() {
-        if (INSTANCE != null) {
-            return INSTANCE;
-        }
-
-        LogFilterCfg.getInstance();
-        if (LogFilterCfg.PRINT_SHADOW || !LogFilterCfg.PHRASES.isEmpty() || !LogFilterCfg.REGEX.isEmpty()) {
-            INSTANCE = new Log4jFilter();
-        }
-        return INSTANCE;
-    }
-
     private static boolean canShowLog(String logString) {
         if (LogFilterCfg.INSTANCE == null) {
             return true;
         }
 
-        if (LogFilterCfg.PRINT_SHADOW && !logString.equals(LAST_SHADOW)) {
+        if (LogFilterCfg.get().printShadow && !logString.equals(LAST_SHADOW)) {
             System.out.println(SHADOW_LOG + logString);
             LAST_SHADOW = logString;
         }
 
-        for (String phrase : LogFilterCfg.PHRASES) {
+        for (String phrase : LogFilterCfg.get().phrases) {
             if (logString.contains(phrase)) {
                 return false;
             }
