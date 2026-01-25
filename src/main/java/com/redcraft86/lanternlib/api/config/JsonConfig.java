@@ -16,7 +16,7 @@ import net.neoforged.fml.loading.FMLPaths;
 public abstract class JsonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final String TAB_KEY = "{TABS}";
+    protected static final String TAB_KEY = "{TABS}";
 
     private final Path filePath;
     private final Path backupPath;
