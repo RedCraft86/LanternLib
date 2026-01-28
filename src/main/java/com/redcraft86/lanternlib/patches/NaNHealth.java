@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.common.patches;
+package com.redcraft86.lanternlib.patches;
 
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;

@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.common.patches;
+package com.redcraft86.lanternlib.patches;
 
 import java.util.Map;
 import java.util.HashMap;

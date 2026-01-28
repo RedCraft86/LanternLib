@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.common.events;
+package com.redcraft86.lanternlib.events;
 
 import com.redcraft86.lanternlib.LanternLib;
 import com.redcraft86.lanternlib.configs.CommonCfg;
