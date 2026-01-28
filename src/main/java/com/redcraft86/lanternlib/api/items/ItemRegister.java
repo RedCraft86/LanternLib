@@ -50,7 +50,7 @@ public final class ItemRegister {
     }
 
     public <T extends Block> void addBlockItem(String name, DeferredBlock<T> block, Item.Properties prop) {
-        items.register(name, () -> new ModBlockItem(block.get(), prop == null ? new Item.Properties() : prop));
+        items.register(name, () -> new BaseBlockItem(block.get(), prop == null ? new Item.Properties() : prop));
     }
 
     private <T extends Item> DeferredItem<T> addItemToTab(ResourceKey<CreativeModeTab> tab, DeferredItem<T> item) {
