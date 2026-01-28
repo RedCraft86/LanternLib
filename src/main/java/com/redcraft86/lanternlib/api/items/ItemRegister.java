@@ -19,7 +19,7 @@ import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
-public class ItemRegister {
+public final class ItemRegister {
     private final ResourceLocation defaultTab;
     private final DeferredRegister.Items items;
     private final Map<ResourceLocation, List<DeferredItem<? extends ItemLike>>> creativeTabs;
