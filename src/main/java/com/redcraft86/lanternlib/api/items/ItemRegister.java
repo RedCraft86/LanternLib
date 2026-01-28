@@ -1,13 +1,10 @@
 package com.redcraft86.lanternlib.api.items;
 
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.ArrayList;
 import java.util.function.Supplier;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.item.CreativeModeTab;
@@ -20,14 +17,14 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 public final class ItemRegister {
-    private final ResourceLocation defaultTab;
     private final DeferredRegister.Items items;
-    private final Map<ResourceLocation, List<DeferredItem<? extends ItemLike>>> creativeTabs;
+    private final ResourceKey<CreativeModeTab> defaultTab;
+    private final Object2ObjectOpenHashMap<ResourceKey<CreativeModeTab>, ObjectArrayList<DeferredItem<? extends ItemLike>>> creativeTabs;
 
     public ItemRegister(String modId, ResourceKey<CreativeModeTab> creativeTab) {
         items = DeferredRegister.createItems(modId);
-        defaultTab = creativeTab.location();
-        creativeTabs = new HashMap<>();
+        defaultTab = creativeTab;
+        creativeTabs = new Object2ObjectOpenHashMap<>();
     }
 
     public DeferredRegister.Items getDeferredRegister() {
@@ -39,8 +36,8 @@ public final class ItemRegister {
     }
 
     public void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (creativeTabs.containsKey(event.getTabKey().location())) {
-            creativeTabs.get(event.getTabKey().location()).forEach(event::accept);
+        if (creativeTabs.containsKey(event.getTabKey())) {
+            creativeTabs.get(event.getTabKey()).forEach(event::accept);
         }
     }
 
@@ -57,7 +54,9 @@ public final class ItemRegister {
     }
 
     private <T extends Item> DeferredItem<T> addItemToTab(ResourceKey<CreativeModeTab> tab, DeferredItem<T> item) {
-        creativeTabs.computeIfAbsent(tab == null ? defaultTab : tab.location(), k -> new ArrayList<>()).add(item);
+        creativeTabs.computeIfAbsent(tab == null ? defaultTab : tab,
+                k -> new ObjectArrayList<>()
+        ).add(item);
         return item;
     }
 }
