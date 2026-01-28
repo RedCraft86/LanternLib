@@ -4,15 +4,16 @@ import java.util.List;
 
 import com.redcraft86.lanternlib.utils.ITooltipProvider;
 
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.network.chat.Component;
 
-public class BaseBlockItem extends BlockItem {
-    public BaseBlockItem(Block block, Properties properties) {
-        super(block, properties);
+public class BaseStandingSignItem extends SignItem implements ITooltipProvider {
+
+    public BaseStandingSignItem(Properties properties, Block standingBlock, Block wallBlock) {
+        super(properties, standingBlock, wallBlock);
     }
 
     @Override

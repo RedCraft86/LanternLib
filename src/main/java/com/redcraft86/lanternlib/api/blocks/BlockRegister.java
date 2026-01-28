@@ -44,6 +44,14 @@ public final class BlockRegister {
         }
     }
 
+    public DeferredBlock<Block> addItemlessBlock(String name, Block.Properties blockProp, ResourceKey<CreativeModeTab> tab) {
+        return addBlockToTab(tab, blocks.registerSimpleBlock(name, blockProp == null ? Block.Properties.of() : blockProp));
+    }
+
+    public <T extends Block> DeferredBlock<T> addItemlessBlock(String name, Supplier<T> block, ResourceKey<CreativeModeTab> tab) {
+        return addBlockToTab(tab, blocks.register(name, block));
+    }
+
     public DeferredBlock<Block> addBlock(String name, Block.Properties blockProp, Item.Properties itemProp, ResourceKey<CreativeModeTab> tab) {
         DeferredBlock<Block> blockObj = addBlockToTab(tab, blocks.registerSimpleBlock(name, blockProp == null ? Block.Properties.of() : blockProp));
         items.addBlockItem(name, blockObj, itemProp);
