@@ -13,9 +13,9 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 
 import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
 import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 
 public final class BlockRegister {
     private final ItemRegister items;
@@ -53,13 +53,13 @@ public final class BlockRegister {
     }
 
     public DeferredBlock<Block> addBlock(String name, Block.Properties blockProp, Item.Properties itemProp, ResourceKey<CreativeModeTab> tab) {
-        DeferredBlock<Block> blockObj = addBlockToTab(tab, blocks.registerSimpleBlock(name, blockProp == null ? Block.Properties.of() : blockProp));
+        DeferredBlock<Block> blockObj = addItemlessBlock(name, blockProp, tab);
         items.addBlockItem(name, blockObj, itemProp);
         return blockObj;
     }
 
     public <T extends Block> DeferredBlock<T> addBlock(String name, Supplier<T> block, Item.Properties itemProp, ResourceKey<CreativeModeTab> tab) {
-        DeferredBlock<T> blockObj = addBlockToTab(tab, blocks.register(name, block));
+        DeferredBlock<T> blockObj = addItemlessBlock(name, block, tab);
         items.addBlockItem(name, blockObj, itemProp);
         return blockObj;
     }
