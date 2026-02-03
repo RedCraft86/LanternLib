@@ -169,7 +169,7 @@ public abstract class JsonConfig {
             }
 
             String comment = getFieldComment(field);
-            if (comment != null && !comment.isBlank())
+            if (!comment.isBlank())
             {
                 comments.put(field.getName(), comment);
             }

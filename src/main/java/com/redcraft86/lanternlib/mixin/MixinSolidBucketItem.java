@@ -16,8 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SolidBucketItem.class)
 public class MixinSolidBucketItem {
-    @Unique
-    private final ItemAccessor superObj = (ItemAccessor)this;
+    @Unique private final ItemAccessor superObj = (ItemAccessor)this;
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void onInit(Block block, SoundEvent placeSound, Item.Properties properties, CallbackInfo ci) {
