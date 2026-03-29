@@ -13,10 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Minecraft.class)
 public class MixinMinecraft {
-    @Unique private static final int TICK_INTERVAL = 5;
-    @Unique private static int TICK_COUNTER = 0;
+    @Unique private static final int LL_TICK_INTERVAL = 5;
+    @Unique private static int LL_TICK_COUNTER = 0;
 
-    @Unique private static String buildMemoryString() {
+    @Unique private static String ll_buildMemoryString() {
         final int CONVERSION = 1024 * 1024;
 
         Runtime run = Runtime.getRuntime();
@@ -27,7 +27,7 @@ public class MixinMinecraft {
     }
 
     @Inject(method = "createTitle", at = @At("RETURN"), cancellable = true)
-    private void onCreateTitle(CallbackInfoReturnable<String> cir) {
+    private void ll_createTitle(CallbackInfoReturnable<String> cir) {
         if (!ClientCfg.isLoaded()) {
             return;
         }
@@ -36,16 +36,16 @@ public class MixinMinecraft {
         final boolean showMemory = ClientCfg.MEMORY_TITLE_BAR.get();
         if (!customTitle.isBlank() || showMemory) {
             String baseTitle = customTitle.isBlank() ? cir.getReturnValue() : customTitle;
-            cir.setReturnValue(showMemory ? String.format("%s | %s", baseTitle, buildMemoryString()) : baseTitle);
+            cir.setReturnValue(showMemory ? String.format("%s | %s", baseTitle, ll_buildMemoryString()) : baseTitle);
         }
     }
 
     @Inject(method = "tick", at = @At("TAIL"))
-    private void onTick(CallbackInfo ci) {
-        if (TICK_COUNTER > TICK_INTERVAL) {
+    private void ll_tick(CallbackInfo ci) {
+        if (LL_TICK_COUNTER > LL_TICK_INTERVAL) {
             ((Minecraft)(Object)this).updateTitle();
-            TICK_COUNTER = 0;
+            LL_TICK_COUNTER = 0;
         }
-        TICK_COUNTER++;
+        LL_TICK_COUNTER++;
     }
 }

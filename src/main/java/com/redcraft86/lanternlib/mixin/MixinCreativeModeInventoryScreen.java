@@ -21,7 +21,7 @@ public class MixinCreativeModeInventoryScreen {
                     target = "Lnet/minecraft/world/item/CreativeModeTabs;tabs()Ljava/util/List;"
             )
     )
-    private List<CreativeModeTab> redirectTabs() {
+    private List<CreativeModeTab> ll_redirectTabs() {
         if (ClientCfg.DISABLE_TAB_TOOLTIPS.get()) {
             return Collections.emptyList();
         }
