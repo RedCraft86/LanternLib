@@ -9,9 +9,9 @@
     "requireAnnotations": true
   },
   "mixins": [
+    "AccessItem",
     "MixinBucketItem",
-    "MixinSolidBucketItem",
-    "accessor.ItemAccessor"
+    "MixinSolidBucketItem"
   ],
   "client": [
     "MixinCreativeModeInventoryScreen",

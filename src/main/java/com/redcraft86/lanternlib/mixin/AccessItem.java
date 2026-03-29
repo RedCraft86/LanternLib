@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.mixin.accessor;
+package com.redcraft86.lanternlib.mixin;
 
 import net.minecraft.world.item.Item;
 
@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Item.class)
-public interface ItemAccessor {
+public interface AccessItem {
     @Accessor("craftingRemainingItem")
     Item getCraftRemainder();
 
