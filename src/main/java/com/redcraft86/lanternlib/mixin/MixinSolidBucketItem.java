@@ -14,12 +14,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(SolidBucketItem.class)
 public class MixinSolidBucketItem {
-    @Unique private final AccessItem superObj = (AccessItem)this;
+    @Unique private final AccessItem ll_superObj = (AccessItem)this;
 
     @Inject(method = "<init>", at = @At("TAIL"))
-    private void onInit(Block block, SoundEvent placeSound, Item.Properties properties, CallbackInfo ci) {
-        if (superObj.getCraftRemainder() == null) {
-            superObj.setCraftRemainder(Items.BUCKET);
+    private void ll_init(Block block, SoundEvent placeSound, Item.Properties properties, CallbackInfo ci) {
+        if (ll_superObj.ll_getCraftRemainder() == null) {
+            ll_superObj.ll_setCraftRemainder(Items.BUCKET);
         }
     }
 }
