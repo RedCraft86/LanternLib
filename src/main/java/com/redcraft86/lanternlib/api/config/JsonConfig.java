@@ -285,8 +285,18 @@ public abstract class JsonConfig {
             }
         }
 
-        if (commentArr == null) {
-            return "";
+        StringBuilder builder = new StringBuilder();
+        if (commentArr != null) {
+            for (Comment comment : commentArr) {
+                // Remove new line characters from the comment itself as those are unsupported
+                String message = comment.value().replace("\n", "");
+
+                builder.append(TAB_KEY);
+                if (!message.isBlank()) {
+                    builder.append("// ").append(message);
+                }
+                builder.append("\n");
+            }
         }
 
         StringBuilder builder = new StringBuilder();
@@ -301,7 +311,11 @@ public abstract class JsonConfig {
             builder.append("\n");
         }
 
-        builder.deleteCharAt(builder.length() - 1);
+        if (builder.charAt(builder.length() - 1) == '\n') {
+            // Remove any trailing new lines
+            builder.deleteCharAt(builder.length() - 1);
+        }
+
         return builder.toString();
     }
 
