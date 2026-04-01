@@ -13,6 +13,9 @@ import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.minecraftforge.fml.loading.FMLPaths;
 
+import net.minecraft.util.Mth;
+import com.redcraft86.lanternlib.api.config.annotations.*;
+
 public abstract class JsonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
@@ -90,14 +93,18 @@ public abstract class JsonConfig {
             StringBuilder builder = new StringBuilder();
             String[] lines = rawStr.split("\n");
             for (String line : lines) {
-                if (!line.trim().startsWith("//")) {
-                    builder.append(line).append("\n");
+                String cleanLine = line.trim();
+                if (!cleanLine.startsWith("//")) {
+                    builder.append(cleanLine);
                 }
             }
-            builder.deleteCharAt(builder.length() - 1);
+
+            String jsonStr = builder.toString()
+                    .replace(",}", "}")  // Fix up trailing commas from braces
+                    .replace(",]", "]"); // ... and brackets too
 
             // Parse values back into the class and check to see if it needs re-saving
-            deserialize(builder.toString());
+            deserialize(jsonStr);
             if (isDirty) {
                 writeFile();
             } else {
@@ -147,6 +154,7 @@ public abstract class JsonConfig {
                     jsonToField(field, element);
                 } else {
                     markDirty();
+                    applyFieldAdjustments(field);
                 }
             }
 
@@ -236,10 +244,36 @@ public abstract class JsonConfig {
         return current;
     }
 
+    private void applyFieldAdjustments(Field field) {
+        if (!field.canAccess(this)) {
+            field.setAccessible(true);
+        }
+
+        try {
+            ValueRange range = field.getAnnotation(ValueRange.class);
+            if (range != null) {
+                Class<?> type = field.getType();
+                if (type == float.class || type == Float.class) {
+                    float val = (float) field.get(this);
+                    field.set(this, Mth.clamp(val, (float) range.min(), (float) range.max()));
+                } else if (type == double.class || type == Double.class) {
+                    double val = (double) field.get(this);
+                    field.set(this, Mth.clamp(val, range.min(), range.max()));
+                } else if (type == int.class || type == Integer.class) {
+                    int val = (int) field.get(this);
+                    field.set(this, Mth.clamp(val, (int) range.min(), (int) range.max()));
+                }
+            }
+        } catch (IllegalAccessException e) {
+            LOGGER.error("Failed to apply field adjustments for config property: {} in {}", field, this, e);
+        }
+    }
+
     private void jsonToField(Field field, JsonElement element) {
         field.setAccessible(true);
         try {
             field.set(this, GSON.fromJson(element, field.getType()));
+            applyFieldAdjustments(field);
         } catch (IllegalAccessException | IllegalArgumentException e) {
             LOGGER.error("Failed to deserialize config property: {} in {}", field.getName(), this, e);
         }
@@ -267,23 +301,34 @@ public abstract class JsonConfig {
             }
         }
 
-        if (commentArr == null) {
-            return "";
-        }
-
         StringBuilder builder = new StringBuilder();
-        for (Comment comment : commentArr) {
-            // Remove new line characters from the comment itself
-            String message = comment.value().replace("\n", "  ");
+        if (commentArr != null) {
+            for (Comment comment : commentArr) {
+                // Support new line chars within the comment itself
+                String message = comment.value().replace("\n", String.format("\n%s//", TAB_KEY));
 
-            builder.append(TAB_KEY);
-            if (!message.isBlank()) {
-                builder.append("// ").append(message);
+                builder.append(TAB_KEY);
+                if (!message.isBlank()) {
+                    builder.append("// ").append(message);
+                }
+                builder.append("\n");
             }
-            builder.append("\n");
         }
 
-        builder.deleteCharAt(builder.length() - 1);
+        ValueRange range = field.getAnnotation(ValueRange.class);
+        if (range != null) {
+            builder.append(TAB_KEY)
+                    .append("// Range: ")
+                    .append(doubleToStr(range.min(), range.deci()))
+                    .append(" ~ ")
+                    .append(doubleToStr(range.max(), range.deci()));
+        }
+
+        if (builder.charAt(builder.length() - 1) == '\n') {
+            // Remove any trailing new lines
+            builder.deleteCharAt(builder.length() - 1);
+        }
+
         return builder.toString();
     }
 
@@ -291,5 +336,11 @@ public abstract class JsonConfig {
     public String toString() {
         String[] name = filePath.toString().split("config", 2);
         return getClass().getSimpleName() + "[Path=" + name[1].replace("\\", "/") +"]";
+    }
+
+    // Special double to string conversion with decimal limiting
+    private static String doubleToStr(double value, int decimals) {
+        //noinspection MalformedFormatString
+        return String.format("%." + decimals + "f", value);
     }
 }
