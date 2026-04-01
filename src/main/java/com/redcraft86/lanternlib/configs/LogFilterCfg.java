@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import com.redcraft86.lanternlib.LanternLib;
 import com.redcraft86.lanternlib.api.config.*;
+import com.redcraft86.lanternlib.api.config.annotations.*;
 
 public final class LogFilterCfg extends JsonConfig {
     public static LogFilterCfg INSTANCE = null;

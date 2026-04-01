@@ -12,6 +12,7 @@ import com.google.gson.*;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.neoforged.fml.loading.FMLPaths;
+import com.redcraft86.lanternlib.api.config.annotations.*;
 
 public abstract class JsonConfig {
     private static final Logger LOGGER = LogUtils.getLogger();

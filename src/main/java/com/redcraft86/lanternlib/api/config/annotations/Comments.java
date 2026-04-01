@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib.api.config;
+package com.redcraft86.lanternlib.api.config.annotations;
 
 import java.lang.annotation.Target;
 import java.lang.annotation.Retention;
