@@ -248,6 +248,20 @@ public abstract class JsonConfig {
         }
 
         try {
+            ValueRange range = field.getAnnotation(ValueRange.class);
+            if (range != null) {
+                Class<?> type = field.getType();
+                if (type == float.class || type == Float.class) {
+                    float val = (float) field.get(this);
+                    field.set(this, Math.clamp(val, (float) range.min(), (float) range.max()));
+                } else if (type == double.class || type == Double.class) {
+                    double val = (double) field.get(this);
+                    field.set(this, Math.clamp(val, range.min(), range.max()));
+                } else if (type == int.class || type == Integer.class) {
+                    int val = (int) field.get(this);
+                    field.set(this, Math.clamp(val, (int) range.min(), (int) range.max()));
+                }
+            }
         } catch (IllegalAccessException e) {
             LOGGER.error("Failed to apply field adjustments for config property: {} in {}", field, this, e);
         }
@@ -299,16 +313,9 @@ public abstract class JsonConfig {
             }
         }
 
-        StringBuilder builder = new StringBuilder();
-        for (Comment comment : commentArr) {
-            // Remove new line characters from the comment itself
-            String message = comment.value().replace("\n", "  ");
-
-            builder.append(TAB_KEY);
-            if (!message.isBlank()) {
-                builder.append("// ").append(message);
-            }
-            builder.append("\n");
+        ValueRange range = field.getAnnotation(ValueRange.class);
+        if (range != null) {
+            builder.append(TAB_KEY).append("// Range: ").append(range.min()).append("...").append(range.max());
         }
 
         if (builder.charAt(builder.length() - 1) == '\n') {
