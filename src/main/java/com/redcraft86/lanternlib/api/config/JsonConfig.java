@@ -152,6 +152,7 @@ public abstract class JsonConfig {
                     jsonToField(field, element);
                 } else {
                     markDirty();
+                    applyFieldAdjustments(field);
                 }
             }
 
@@ -241,10 +242,22 @@ public abstract class JsonConfig {
         return current;
     }
 
+    private void applyFieldAdjustments(Field field) {
+        if (!field.canAccess(this)) {
+            field.setAccessible(true);
+        }
+
+        try {
+        } catch (IllegalAccessException e) {
+            LOGGER.error("Failed to apply field adjustments for config property: {} in {}", field, this, e);
+        }
+    }
+
     private void jsonToField(Field field, JsonElement element) {
         field.setAccessible(true);
         try {
             field.set(this, GSON.fromJson(element, field.getType()));
+            applyFieldAdjustments(field);
         } catch (IllegalAccessException | IllegalArgumentException e) {
             LOGGER.error("Failed to deserialize config property: {} in {}", field.getName(), this, e);
         }
