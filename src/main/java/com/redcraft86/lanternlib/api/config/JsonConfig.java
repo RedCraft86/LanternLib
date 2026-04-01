@@ -91,14 +91,18 @@ public abstract class JsonConfig {
             StringBuilder builder = new StringBuilder();
             String[] lines = rawStr.split("\n");
             for (String line : lines) {
-                if (!line.trim().startsWith("//")) {
-                    builder.append(line).append("\n");
+                String cleanLine = line.trim();
+                if (!cleanLine.startsWith("//")) {
+                    builder.append(cleanLine);
                 }
             }
-            builder.deleteCharAt(builder.length() - 1);
+
+            String jsonStr = builder.toString()
+                .replace(",}", "}")  // Fix up trailing commas from braces
+                .replace(",]", "]"); // ... and brackets too
 
             // Parse values back into the class and check to see if it needs re-saving
-            deserialize(builder.toString());
+            deserialize(jsonStr);
             if (isDirty) {
                 writeFile();
             } else {
