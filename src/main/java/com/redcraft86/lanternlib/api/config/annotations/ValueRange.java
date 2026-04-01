@@ -13,4 +13,7 @@ import java.lang.annotation.RetentionPolicy;
 public @interface ValueRange {
     double min() default 0.0;
     double max() default 1.0;
+
+    // Num of decimals to display when showing it as a comment in the config file
+    int deci() default 0;
 }

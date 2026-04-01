@@ -317,7 +317,11 @@ public abstract class JsonConfig {
 
         ValueRange range = field.getAnnotation(ValueRange.class);
         if (range != null) {
-            builder.append(TAB_KEY).append("// Range: ").append(range.min()).append("...").append(range.max());
+            builder.append(TAB_KEY)
+                    .append("// Range: ")
+                    .append(doubleToStr(range.min(), range.deci()))
+                    .append(" ~ ")
+                    .append(doubleToStr(range.max(), range.deci()));
         }
 
         if (builder.charAt(builder.length() - 1) == '\n') {
@@ -332,5 +336,11 @@ public abstract class JsonConfig {
     public String toString() {
         String[] name = filePath.toString().split("config", 2);
         return getClass().getSimpleName() + "[Path=" + name[1].replace("\\", "/") +"]";
+    }
+
+    // Special double to string conversion with decimal limiting
+    private static String doubleToStr(double value, int decimals) {
+        //noinspection MalformedFormatString
+        return String.format("%." + decimals + "f", value);
     }
 }
