@@ -302,8 +302,8 @@ public abstract class JsonConfig {
         StringBuilder builder = new StringBuilder();
         if (commentArr != null) {
             for (Comment comment : commentArr) {
-                // Remove new line characters from the comment itself as those are unsupported
-                String message = comment.value().replace("\n", "");
+                // Support new line chars within the comment itself
+                String message = comment.value().replace("\n", String.format("\n%s//", TAB_KEY));
 
                 builder.append(TAB_KEY);
                 if (!message.isBlank()) {
