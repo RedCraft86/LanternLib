@@ -12,6 +12,8 @@ import com.google.gson.*;
 import org.slf4j.Logger;
 import com.mojang.logging.LogUtils;
 import net.neoforged.fml.loading.FMLPaths;
+
+import net.minecraft.util.Mth;
 import com.redcraft86.lanternlib.api.config.annotations.*;
 
 public abstract class JsonConfig {
@@ -253,13 +255,13 @@ public abstract class JsonConfig {
                 Class<?> type = field.getType();
                 if (type == float.class || type == Float.class) {
                     float val = (float) field.get(this);
-                    field.set(this, Math.clamp(val, (float) range.min(), (float) range.max()));
+                    field.set(this, Mth.clamp(val, (float) range.min(), (float) range.max()));
                 } else if (type == double.class || type == Double.class) {
                     double val = (double) field.get(this);
-                    field.set(this, Math.clamp(val, range.min(), range.max()));
+                    field.set(this, Mth.clamp(val, range.min(), range.max()));
                 } else if (type == int.class || type == Integer.class) {
                     int val = (int) field.get(this);
-                    field.set(this, Math.clamp(val, (int) range.min(), (int) range.max()));
+                    field.set(this, Mth.clamp(val, (int) range.min(), (int) range.max()));
                 }
             }
         } catch (IllegalAccessException e) {
