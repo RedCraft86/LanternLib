@@ -1,3 +1,5 @@
+# LanternLib has now been merged with [OddsAndEnds](https://github.com/RedCraft86/OddsAndEnds)
+
 Common library for RedCraft86's mods.
 
 ### **Modpack Usage**
