@@ -21,7 +21,7 @@ public class LogFilterConfig extends Config {
     @Comment("""
         Prints a shadow log alongside the actual log output.
         Can be used to see the raw line that will get filtered.
-        """)
+    """)
     public boolean printShadow = false;
 
     @Comment("If System.out.print logs should be affected by the filters.")

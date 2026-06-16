@@ -26,8 +26,8 @@ public class ClientConfig extends Config {
     }
 
     @Comment("""
-            Disables tooltips in the creative mode player inventory from containing the tab name of that item.
-            Fixes the issue where if a mod like ModNameTooltip or JEI is active, the mod names double up in creative.
-        """)
+        Disables tooltips in the creative mode player inventory from containing the tab name of that item.
+        Fixes the issue where if a mod like ModNameTooltip or JEI is active, the mod names double up in creative.
+    """)
     public boolean disableTabTooltips = true;
 }
