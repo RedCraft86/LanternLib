@@ -1,5 +1,6 @@
 package com.redcraft86.lanternlib;
 
+import com.redcraft86.lanternlib.features.LogFilter;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.neoforge.common.NeoForge;

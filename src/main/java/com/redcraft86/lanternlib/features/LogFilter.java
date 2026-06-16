@@ -1,4 +1,4 @@
-package com.redcraft86.lanternlib;
+package com.redcraft86.lanternlib.features;
 
 import java.util.Map;
 import java.util.List;
