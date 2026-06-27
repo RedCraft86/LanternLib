@@ -16,6 +16,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 /**
  * Idea initially from NaNny though the implementation is slightly more basic compared to it.
  * I'm not even sure how common this problem is so this might not stay for very long unless I forget.
+ * Inspired by: <a href="https://github.com/Vonr/NaNny">NaNny Page</a>
  */
 @EventBusSubscriber(modid = LanternLib.MOD_ID)
 public final class NaNHealth {
