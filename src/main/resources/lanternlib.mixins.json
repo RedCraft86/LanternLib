@@ -9,7 +9,7 @@
     "requireAnnotations": true
   },
   "mixins": [
-    "AccessItem",
+    "AccessorItem",
     "MixinBucketItem",
     "MixinSolidBucketItem"
   ],

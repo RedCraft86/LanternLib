@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
 @Mixin(Item.class)
-public interface AccessItem {
+public interface AccessorItem {
     @Accessor("craftingRemainingItem")
     Item ll_getCraftRemainder();
 

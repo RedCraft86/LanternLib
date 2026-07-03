@@ -16,8 +16,8 @@ public class MixinSolidBucketItem {
     @Inject(method = "<init>", at = @At("TAIL"))
     private void ll_init(Block block, SoundEvent placeSound, Item.Properties properties, CallbackInfo ci) {
         // Makes all solid bucketed items return a bucket remainder after being used in crafting if not already set
-        if (((AccessItem)this).ll_getCraftRemainder() == null) {
-            ((AccessItem)this).ll_setCraftRemainder(Items.BUCKET);
+        if (((AccessorItem)this).ll_getCraftRemainder() == null) {
+            ((AccessorItem)this).ll_setCraftRemainder(Items.BUCKET);
         }
     }
 }
